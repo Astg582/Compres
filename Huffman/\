@@ -1,0 +1,105 @@
+#include <iostream>
+
+#include <unordered_map>
+#include <set>
+#include <string>
+
+class Node {
+	public:
+		char data;
+		unsigned int fraq;
+		Node* left;
+		Node* right;
+
+		Node(char d, unsigned int f): data(d), fraq(f), left(nullptr), right(nullptr) {}
+};
+
+class Huff {
+	public:
+		Node* head;
+
+	public:
+
+		Huff() : head(nullptr) {}
+
+		// Оператор копирования удален
+		Huff(const Huff&) = delete;
+
+		// Оператор перемещения
+		Huff(Huff&& rhv) : head(rhv.head) {
+			rhv.head = nullptr; // обнуляем указатель, чтобы избежать двойного удаления
+		}
+
+		// Оператор присваивания перемещения
+		Huff& operator=(Huff&& rhv) {
+			if (this != &rhv) {
+				head = rhv.head;
+				rhv.head = nullptr; // обнуляем указатель, чтобы избежать двойного удаления
+			}
+			return *this;
+		}
+
+
+		~Huff () {
+			if(!head){
+				return;
+			}
+			Node* cur = head;
+			clear(cur);
+			head = nullptr;
+
+		}
+
+		void insert(char newData, unsigned int newFraq) {
+			Node* newNode = new Node(newData, newFraq);
+
+			if (!head) {
+				head = newNode;
+				return;
+			}
+
+			if (newNode->fraq <= head->fraq) {
+				newNode->right = head;
+				head = newNode;
+				return;
+			}
+
+			Node* cur = head;
+
+			while (cur->right && newNode->fraq < cur->right->fraq) {
+				cur = cur->right;
+			}
+
+			newNode->right = cur->right;
+			cur->right = newNode;
+		}
+
+		Huff* root(std::unordered_map<char, unsigned int> m){
+
+			Huff* res;
+			for (const auto& pair : m) {
+				res->insert(pair.second, pair.first);
+			}
+			return res;
+		}
+
+};	
+
+std::unordered_map<char, unsigned int> caunt(const std::string& str) {
+	std::unordered_map<char, unsigned int> m;
+	for (char c : str) {
+		m[c] += 1;
+	}
+	return m;
+}
+
+
+int main() {
+	Huff tree;
+	tree.insert('A', 0);
+	tree.insert('x', 12);
+	tree.insert('B', 24);
+	tree.insert('C', 3);
+	std::cout << tree.head->data << std::endl;
+	return 0;
+}
