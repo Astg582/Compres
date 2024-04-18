@@ -22,6 +22,7 @@ public:
     Huff(const Huff&) = delete;
     Huff(Huff&& rhv);
     Huff& operator=(Huff&& rhv);
+    void clear(Node* cur);
     ~Huff();
 
     void insert(char newData, unsigned int newFraq);

@@ -1,8 +1,5 @@
 #include "Huff.h"
 
-#ifdef _HUFF_CPP_
-#define _HUFF_CPP_
-
 Node::Node(char d, unsigned int f) : data(d), fraq(f), left(nullptr), right(nullptr) {}
 
 Huff::Huff() : head(nullptr) {}
@@ -75,5 +72,4 @@ std::unordered_map<char, unsigned int> Huff::caunt(const std::string& str) {
     return m;
 }
 
-#endif // _HUFF_CPP_
 
