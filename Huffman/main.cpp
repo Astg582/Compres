@@ -3,19 +3,26 @@
 #include <unordered_map>
 #include <string>
 
-
-
-
 int main() {
+    std::string str;
+    std::cout << "Enter text: ";
+    std::getline(std::cin, str);
     Huff* tree = new Huff();
-    std::string str = "sdfffrrrrhagjhyyysds";
+
     std::unordered_map<char, unsigned int> m = tree->caunt(str);
-    Huff* root = Huff::root(m);
-    for(Node* i = root->head; i != nullptr; i = i->right) {
+    Huff* ro = Huff::rootf(m);
+
+    for (Node* i = ro->head; i != nullptr; i = i->right) {
         std::cout << i->data << ":" << i->fraq << std::endl;
     }
-    delete tree;
-    delete root;
+
+    ro->create_tree();
+   
+
+    ro->print_leaves(ro->root);    
+    
+delete tree;
+    delete ro;
     return 0;
 }
 
