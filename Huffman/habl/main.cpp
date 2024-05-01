@@ -1,12 +1,12 @@
-#include "huff.h"
-#include <iostream>
+// main.cpp
+#include "haff.h"
 
+int main() {
+    string text = "Hello how are you 65";
 
-int main()
-{
-	string text = "Huffman coding is a data compression algorithm.";
+    Huff huff;
+    huff.buildHuffmanTree(text);
 
-	buildHuffmanTree(text);
-
-	return 0;
+    return 0;
 }
+
